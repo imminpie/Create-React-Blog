@@ -7,25 +7,28 @@ import PostList from './pages/PostList';
 import PostNew from './pages/PostNew';
 import PostDetail from './pages/PostDetail';
 import PostEdit from './pages/PostEdit';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
     errorElement: <p>Not Found 😅</p>,
-    children: [{ index: true, path: '/', element: <PostList /> }],
-  },
-  {
-    path: '/post/new',
-    element: <PostNew />,
-  },
-  {
-    path: 'post/:id',
-    element: <PostDetail />,
-  },
-  {
-    path: 'post/edit/:id',
-    element: <PostEdit />,
+    children: [
+      { index: true, path: '/', element: <PostList /> },
+      {
+        path: '/post/new',
+        element: <PostNew />,
+      },
+      {
+        path: 'post/:id',
+        element: <PostDetail />,
+      },
+      {
+        path: 'post/edit/:id',
+        element: <PostEdit />,
+      },
+    ],
   },
 ]);
 
