@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 export default function PostNew() {
   const [post, setPost] = useState({ id: '', title: '', content: '' });
   const [store, setStore] = useState(() => readTodoFromLocalStorage());
+  const [status, setStatus] = useState(false);
   const navigate = useNavigate();
 
   const titleInput = useRef();
@@ -33,11 +34,16 @@ export default function PostNew() {
 
     setStore((prev) => [...prev, post]);
     setPost({ id: '', title: '', content: '' });
+    setStatus(!status);
   };
 
   useEffect(() => {
     localStorage.setItem('posts', JSON.stringify(store));
-  }, [store]);
+    if (status === true) {
+      navigate('/');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [store, status]);
 
   return (
     <form className='form' onSubmit={handleSubmit}>
