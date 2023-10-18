@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import IsModal from '../components/IsModal';
 
 export default function PostDetail() {
@@ -42,6 +42,9 @@ export default function PostDetail() {
         </div>
       ))}
       <div>
+        <Link to={`/post/edit/${params.id}`} state={{ post: filtered }}>
+          <button type='button'>수정</button>
+        </Link>
         <button onClick={handleShow}>삭제</button>
       </div>
       {isModal && (
