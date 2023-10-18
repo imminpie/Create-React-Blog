@@ -1,12 +1,38 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './index.css';
 import App from './App';
+import PostList from './pages/PostList';
+import PostNew from './pages/PostNew';
+import PostDetail from './pages/PostDetail';
+import PostEdit from './pages/PostEdit';
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <App />,
+    errorElement: <p>Not Found 😅</p>,
+    children: [{ index: true, path: '/', element: <PostList /> }],
+  },
+  {
+    path: '/post/new',
+    element: <PostNew />,
+  },
+  {
+    path: 'post/:id',
+    element: <PostDetail />,
+  },
+  {
+    path: 'post/edit/:id',
+    element: <PostEdit />,
+  },
+]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <RouterProvider router={router} />
   </React.StrictMode>
 );
 
