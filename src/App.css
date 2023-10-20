@@ -1,17 +1,3 @@
-.form {
-  padding: 5rem 0;
-}
-
-.input {
-  width: 100%;
-  margin-bottom: 2rem;
-  padding-bottom: 0.5rem;
-  outline: none;
-  font-size: 2rem;
-  border: none;
-  border-bottom: 1px solid grey;
-}
-
 .textarea {
   resize: none;
   width: 100%;
@@ -20,4 +6,77 @@
   font-size: 1.125rem;
   line-height: 1.5;
   border: none;
+}
+
+.wrap {
+  width: 100%;
+  background-color: var(--background-base);
+}
+
+.inner {
+  max-width: 1024px;
+  padding: 0 1rem;
+  margin: 0 auto;
+
+  @media (max-width: 1024px) {
+    width: 768px;
+  }
+
+  @media (max-width: 768px) {
+    width: 576px;
+  }
+
+  @media (max-width: 576px) {
+    width: 100%;
+  }
+}
+
+.text_overflow {
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.button {
+  margin-right: 0.5rem;
+  padding: 0.5rem 1.5rem;
+  opacity: 1;
+  border: none;
+  letter-spacing: 2px;
+  color: var(--color-white);
+  font-weight: 700;
+  transition: background-color 0.3s ease-out;
+}
+
+.button_primary {
+  background: var(--color-accent);
+}
+
+.button_danger {
+  background-color:var(--color-grey1);
+}
+
+.button_primary:hover {
+  background-color: var(--color-accent-hover);
+}
+
+.button_danger:hover {
+  background-color:var(--color-grey2);
+}
+
+input {
+  width: 100%;
+  margin-bottom: 1.125rem;
+  padding: 0.5rem;
+  outline: none;
+  color: var(--color-black);
+  font-size: 1.875rem;
+  border: none;
+  border-bottom: 1px solid var(--color-border1);
+  background-color: var(--background-base);
+}
+
+input::placeholder {
+  color: var(--color-text2);
 }

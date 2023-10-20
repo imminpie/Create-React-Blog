@@ -1,0 +1,40 @@
+.contents {
+  padding: 7rem 1rem 3rem;
+}
+
+.title {
+  padding-bottom: 3rem;
+  font-size: 2.125rem;
+  font-weight: 700;
+  text-align: center;
+  border-bottom: 1px solid var(--color-border1);
+}
+
+.content {
+  padding: 3rem 0;
+  line-height: 1.75;
+  white-space: pre-line;
+  word-break: break-word;
+}
+
+.content a {
+  color: var(--color-link);
+  text-decoration: underline;
+}
+
+.button_area {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--color-white);
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 8px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 auto;
+  max-width: 1024px;
+  padding: 1rem 0.5rem;
+}

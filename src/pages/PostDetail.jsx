@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
+import styles from '../css/PostDetail.module.css';
 import IsModal from '../components/IsModal';
 
 export default function PostDetail() {
@@ -16,7 +17,7 @@ export default function PostDetail() {
     setIsModal((show) => !show);
   };
 
-  const handleCandle = (cancled) => {
+  const handleCandle = () => {
     setIsModal((cancled) => !cancled);
   };
 
@@ -34,27 +35,39 @@ export default function PostDetail() {
   }, [store, status]);
 
   return (
-    <>
-      {filtered.map((post) => (
-        <div key={post.id}>
-          <p>{post.title}</p>
-          <p>{post.content}</p>
+    <section className='wrap'>
+      <div className={`${styles.contents} inner`}>
+        {filtered.map((post) => (
+          <div key={post.id}>
+            <p className={styles.title}>{post.title}</p>
+            <p
+              className={styles.content}
+              dangerouslySetInnerHTML={{ __html: post.content }}
+            ></p>
+          </div>
+        ))}
+        <div className={styles.button_area}>
+          <div className={`${styles.buttons} inner`}>
+            <Link to={`/post/edit/${params.id}`} state={{ post: filtered }}>
+              <button type='button' className='button button_primary'>
+                수정
+              </button>
+            </Link>
+            <button onClick={handleShow} className='button button_danger'>
+              삭제
+            </button>
+          </div>
         </div>
-      ))}
-      <div>
-        <Link to={`/post/edit/${params.id}`} state={{ post: filtered }}>
-          <button type='button'>수정</button>
-        </Link>
-        <button onClick={handleShow}>삭제</button>
+        {isModal && (
+          <IsModal
+            params={params}
+            onCancle={handleCandle}
+            onDelete={handleDelete}
+            show={isModal}
+          />
+        )}
       </div>
-      {isModal && (
-        <IsModal
-          params={params}
-          onCancle={handleCandle}
-          onDelete={handleDelete}
-        />
-      )}
-    </>
+    </section>
   );
 }
 

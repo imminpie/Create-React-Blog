@@ -1,18 +1,24 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import styles from '../css/PostList.module.css';
 
 export default function PostList() {
   const [posts, setPosts] = useState(() => readTodoFromLocalStorage());
   return (
-    <main>
-      {posts.map((post) => (
-        <div key={post.id}>
-          <Link to={`/post/${post.id}`}>
-            <p>{post.title}</p>
-          </Link>
-          <p>{post.content}</p>
-        </div>
-      ))}
+    <main className='wrap'>
+      <ul className={`${styles.list} inner`}>
+        {posts.map((post) => (
+          <li className={styles.list_item} key={post.id}>
+            <Link to={`/post/${post.id}`}>
+              <p className={`${styles.title} text_overflow`}>{post.title}</p>
+              <p
+                className={`${styles.content} text_overflow`}
+                dangerouslySetInnerHTML={{ __html: post.content }}
+              ></p>
+            </Link>
+          </li>
+        ))}
+      </ul>
     </main>
   );
 }

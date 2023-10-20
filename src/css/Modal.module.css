@@ -1,0 +1,40 @@
+.header {
+  margin: 0 auto;
+  border-bottom: 0 none;
+}
+
+.title {
+  font-size: 5rem;
+}
+
+.body {
+  font-size: 1.125rem;
+  text-align: center;
+}
+
+.footer {
+  margin: 0 auto;
+  border-top: 0 none;
+}
+
+.btn {
+  padding: 0.5rem 1.125rem;
+  border: 0 none;
+  transition: background-color 0.3s ease-out;
+}
+
+.btn_primary {
+  background-color: var(--color-accent);
+}
+
+.btn_cancle {
+  background-color: var(--color-grey1);
+}
+
+.btn_primary:hover {
+  background-color: var(--color-accent-hover);
+}
+
+.btn_cancle:hover {
+  background-color: var(--color-grey2);
+}

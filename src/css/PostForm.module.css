@@ -1,0 +1,32 @@
+.form {
+  padding: 6rem 1rem 3rem;
+}
+
+.button_area {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  background-color: var(--color-white);
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 8px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 1rem 0.5rem
+}
+
+.cancle {
+  display: flex;
+  align-items: center;
+  color: var(--color-text3);
+  font-weight: 700;
+  border: 0 none;
+  background-color: transparent;
+}
+.cancle > span {
+  margin-left: 8px;
+}
