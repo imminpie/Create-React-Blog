@@ -10,11 +10,16 @@ export default function PostList() {
         {posts.map((post) => (
           <li className={styles.list_item} key={post.id}>
             <Link to={`/post/${post.id}`}>
-              <p className={`${styles.title} text_overflow`}>{post.title}</p>
-              <p
-                className={`${styles.content} text_overflow`}
-                dangerouslySetInnerHTML={{ __html: post.content }}
-              ></p>
+              <div className={styles.contents_area}>
+                <p className={`${styles.title} text_overflow`}>{post.title}</p>
+                <p
+                  className={`${styles.content} text_overflow`}
+                  dangerouslySetInnerHTML={{
+                    __html: post.content.replaceAll(/(<([^>]+)>)/gi, ''),
+                  }}
+                ></p>
+              </div>
+              <p className={styles.date}>{post.date}</p>
             </Link>
           </li>
         ))}
