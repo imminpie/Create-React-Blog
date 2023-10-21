@@ -5,6 +5,10 @@
 
 .title {
   font-size: 5rem;
+
+  @media (max-width: 768px) {
+    font-size: 4rem;
+  }
 }
 
 .body {

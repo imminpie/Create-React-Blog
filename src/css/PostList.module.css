@@ -34,6 +34,14 @@
 
 .contents_area {
   width: 80%;
+
+  @media (max-width: 768px) {
+    width: 70%;
+  }
+
+  @media (max-width: 576px) {
+    width: 60%;
+  }
 }
 
 .content {
