@@ -3,15 +3,22 @@
 }
 
 .title {
-  padding-bottom: 3rem;
-  font-size: 2.125rem;
+  font-size: 1.875rem;
   font-weight: 700;
   text-align: center;
+}
+
+.date {
+  padding: 0.375rem 0 1.5rem;
+  font-size: 0.875rem;
+  text-align: center;
+  color: var(--color-text2);
   border-bottom: 1px solid var(--color-border1);
 }
 
 .content {
-  padding: 3rem 0;
+  padding: 1.5rem 0 3rem;
+  color: var(--color-text3);
   line-height: 1.75;
   white-space: pre-line;
   word-break: break-word;

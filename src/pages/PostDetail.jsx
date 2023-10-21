@@ -1,29 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import styles from '../css/PostDetail.module.css';
-import IsModal from '../components/IsModal';
+import ModalBase from '../components/ModalBase';
 
 export default function PostDetail() {
   const params = useParams();
+
   const [store, setStore] = useState(() => readTodoFromLocalStorage());
-  const [isModal, setIsModal] = useState(false);
   const [status, setStatus] = useState(false);
+  const [isModal, setIsModal] = useState({status: false, title: '', cancle: true,});
 
   const navigate = useNavigate();
   const filtered = getFilteredItems(store, params);
 
-  const handleShow = (e) => {
+  const handleModal = (e) => {
     e.preventDefault();
-    setIsModal((show) => !show);
+    setIsModal({ status: true, title: '정말 삭제하시겠습니까?', cancle: true });
+  };
+
+  const handleDelete = () => {
+    setStore(store.filter((post) => post.id !== params.id));
+    setStatus(!status);
   };
 
   const handleCandle = () => {
-    setIsModal((cancled) => !cancled);
-  };
-
-  const handleDelete = (deleted) => {
-    setStore(store.filter((post) => post.id !== deleted.id));
-    setStatus(!status);
+    setIsModal({ status: !isModal, title: '', cancle: true });
   };
 
   useEffect(() => {
@@ -40,6 +41,7 @@ export default function PostDetail() {
         {filtered.map((post) => (
           <div key={post.id}>
             <p className={styles.title}>{post.title}</p>
+            <p className={styles.date}>{post.date}</p>
             <p
               className={styles.content}
               dangerouslySetInnerHTML={{ __html: post.content }}
@@ -53,17 +55,16 @@ export default function PostDetail() {
                 수정
               </button>
             </Link>
-            <button onClick={handleShow} className='button button_danger'>
+            <button onClick={handleModal} className='button button_danger'>
               삭제
             </button>
           </div>
         </div>
         {isModal && (
-          <IsModal
-            params={params}
-            onCancle={handleCandle}
-            onDelete={handleDelete}
+          <ModalBase
             show={isModal}
+            onConfirm={handleDelete}
+            onCancle={handleCandle}
           />
         )}
       </div>

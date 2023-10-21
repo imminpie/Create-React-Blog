@@ -9,15 +9,15 @@
   --color-black: #232324;
   --color-text1: #777;
   --color-text2: #999;
-  --color-text3: #555;
+  --color-text3: #4d4d4d;
   --color-accent: #2ac1bc;
   --color-accent-hover: #2aaec1;
   --color-link: #f54;
+  --color-grey1: #b4b4b4;
   --color-border1: #dee2e6;
+  --color-grey2: #ababab;
   --color-border2: #c4c4c4;
   --background-base: #f8f9fa;
-  --color-grey1: #b4b4b4;
-  --color-grey2: #ababab;
 }
 
 body {
@@ -26,7 +26,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   box-sizing: border-box;
-  overflow-y: scroll;
+  background-color: var(--background-base);
 }
 
 h1,

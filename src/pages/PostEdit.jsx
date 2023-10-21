@@ -1,12 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styles from '../css/PostForm.module.css';
+import ModalBase from '../components/ModalBase';
 import { FaArrowLeft } from 'react-icons/fa';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
 export default function PostEdit() {
+  const createDate = new Date().getTime();
   const location = useLocation();
+  const navigate = useNavigate();
+  const titleInput = useRef();
+  const contentInput = useRef();
 
   const [store, setStore] = useState(() => readTodoFromLocalStorage());
   const [post, setPost] = useState(location.state.post[0]);
@@ -14,8 +19,8 @@ export default function PostEdit() {
   const [content, setContent] = useState(post.content);
   const [isPost, setIsPost] = useState(false);
   const [status, setStatus] = useState(false);
+  const [isModal, setIsModal] = useState({status: false, title: '', cancle: false,});
 
-  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setTitle(e.target.value);
@@ -24,12 +29,31 @@ export default function PostEdit() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    if (title.trim().length === 0) {
+      titleInput.current.focus();
+      return handleEmptyFields('제목을 입력하세요');
+    }
+
+    if (content.trim().replaceAll(/<[^>]*>?/g, '').length === 0) {
+      contentInput.current.focus();
+      return handleEmptyFields('내용을 입력하세요');
+    }
+
     setPost((prev) => ({
       ...prev,
       title,
       content,
+      date: new Date(createDate).toLocaleDateString(),
     }));
     setIsPost(!isPost);
+  };
+
+  const handleEmptyFields = (title) => {
+    setIsModal({ status: true, title: title, cancle: false });
+  };
+
+  const handleCandle = () => {
+    setIsModal({ status: !isModal, title: '', cancle: false });
   };
 
   useEffect(() => {
@@ -53,12 +77,14 @@ export default function PostEdit() {
           type='text'
           name='title'
           value={title}
+          ref={titleInput}
           onChange={handleChange}
           placeholder='제목을 입력하세요'
         />
         <ReactQuill
           value={content}
           theme='snow'
+          ref={contentInput}
           onChange={setContent}
           placeholder='내용을 입력하세요.'
         />
@@ -77,6 +103,7 @@ export default function PostEdit() {
           </button>
         </div>
       </div>
+      {isModal && <ModalBase show={isModal} onConfirm={handleCandle} />}
     </form>
   );
 }

@@ -2,21 +2,22 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import styles from '../css/PostForm.module.css';
+import ModalBase from '../components/ModalBase';
 import { FaArrowLeft } from 'react-icons/fa';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import IsAlert from '../components/IsAlert';
 
 export default function PostNew() {
+  const createDate = new Date().getTime();
+  const navigate = useNavigate();
+  const titleInput = useRef();
+  const contentInput = useRef();
+
   const [store, setStore] = useState(() => readTodoFromLocalStorage());
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [status, setStatus] = useState(false);
-  const [isAlert, setIsAlert] = useState({ status: false, title: '' });
-
-  const navigate = useNavigate();
-  const titleInput = useRef();
-  const contentInput = useRef();
+  const [isModal, setIsModal] = useState({status: false, title: '', cancle: false,});
 
   const handleChange = (e) => {
     setTitle(e.target.value);
@@ -36,17 +37,22 @@ export default function PostNew() {
     }
     setStore((prev) => [
       ...prev,
-      { id: uuidv4(), title: title, content: content },
+      {
+        id: uuidv4(),
+        title: title,
+        content: content,
+        date: new Date(createDate).toLocaleDateString(),
+      },
     ]);
     setStatus(!status);
   };
 
   const handleEmptyFields = (title) => {
-    setIsAlert({ status: !status, title: title });
+    setIsModal({ status: true, title: title, cancle: false });
   };
 
   const handleCandle = () => {
-    setIsAlert({ status: !isAlert, title: '' });
+    setIsModal({ status: !isModal, title: '', cancle: false });
   };
 
   useEffect(() => {
@@ -83,7 +89,7 @@ export default function PostNew() {
           </button>
         </div>
       </div>
-      {isAlert && <IsAlert show={isAlert} onCancle={handleCandle} />}
+      {isModal && <ModalBase show={isModal} onConfirm={handleCandle} />}
     </form>
   );
 }

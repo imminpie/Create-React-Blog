@@ -2,6 +2,7 @@
 
 .ql-toolbar.ql-snow {
   border: 0 none !important;
+  padding: 0.5rem 0 !important;
 }
 
 .ql-container.ql-snow {
@@ -13,12 +14,14 @@
 }
 
 .ql-editor {
-  padding: 1.125rem 0.5rem !important;
+  padding: 1.125rem 0 !important;
+  color: var(--color-text3) !important;
+  line-height: 1.75rem !important;
   font-size: 1rem !important;
 }
 
 .ql-editor.ql-blank::before {
-  left: 0.5rem !important;
+  left: 0 !important;
   color: var(--color-text2) !important;
   font-style: normal !important;
 }

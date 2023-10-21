@@ -1,5 +1,5 @@
 .form {
-  padding: 6rem 1rem 3rem;
+  padding: 7rem 1rem 3rem;
 }
 
 .button_area {
@@ -27,6 +27,7 @@
   border: 0 none;
   background-color: transparent;
 }
+
 .cancle > span {
   margin-left: 8px;
 }
