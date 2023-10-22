@@ -7,8 +7,14 @@ export default function PostDetail() {
   const params = useParams();
 
   const [store, setStore] = useState(() => readTodoFromLocalStorage());
+  const [tags, setTages] = useState(() => readTodoFromLocalStorageTag());
+
   const [status, setStatus] = useState(false);
-  const [isModal, setIsModal] = useState({status: false, title: '', cancle: true,});
+  const [isModal, setIsModal] = useState({
+    status: false,
+    title: '',
+    cancle: true,
+  });
 
   const navigate = useNavigate();
   const filtered = getFilteredItems(store, params);
@@ -42,6 +48,15 @@ export default function PostDetail() {
           <div key={post.id}>
             <p className={styles.title}>{post.title}</p>
             <p className={styles.date}>{post.date}</p>
+            <div className={styles.tag_area}>
+              {tags.map(
+                (item) =>
+                  item.id === post.id &&
+                  item.tag.map((value) => (
+                    <div className={styles.tag} key={value}>{`# ${value}`}</div>
+                  ))
+              )}
+            </div>
             <p
               className={styles.content}
               dangerouslySetInnerHTML={{ __html: post.content }}
@@ -75,6 +90,11 @@ export default function PostDetail() {
 function readTodoFromLocalStorage() {
   const posts = localStorage.getItem('posts');
   return posts ? JSON.parse(posts) : [];
+}
+
+function readTodoFromLocalStorageTag() {
+  const tags = localStorage.getItem('tags');
+  return tags ? JSON.parse(tags) : [];
 }
 
 function getFilteredItems(store, params) {

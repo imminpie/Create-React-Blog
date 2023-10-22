@@ -53,3 +53,19 @@
   font-size: 0.875rem;
   color: var(--color-text2);
 }
+
+.tag_area {
+  margin-top: 1rem;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 0.5rem;
+  padding: 0 0.75rem;
+  height: 1.875rem;
+  font-size: 0.75rem;
+  border-radius: 0.938rem;
+  color: var(--color-accent);
+  background-color: var(--background-bg1);
+}

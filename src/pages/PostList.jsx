@@ -4,6 +4,8 @@ import styles from '../css/PostList.module.css';
 
 export default function PostList() {
   const [posts, setPosts] = useState(() => readTodoFromLocalStorage());
+  const [tags, setTages] = useState(() => readTodoFromLocalStorageTag());
+
   return (
     <main className='wrap'>
       <ul className={`${styles.list} inner`}>
@@ -18,6 +20,18 @@ export default function PostList() {
                     __html: post.content.replaceAll(/(<([^>]+)>)/gi, ''),
                   }}
                 ></p>
+                <div className={styles.tag_area}>
+                  {tags.map(
+                    (item) =>
+                      item.id === post.id &&
+                      item.tag.map((value) => (
+                        <div
+                          className={styles.tag}
+                          key={value}
+                        >{`# ${value}`}</div>
+                      ))
+                  )}
+                </div>
               </div>
               <p className={styles.date}>{post.date}</p>
             </Link>
@@ -31,4 +45,9 @@ export default function PostList() {
 function readTodoFromLocalStorage() {
   const posts = localStorage.getItem('posts');
   return posts ? JSON.parse(posts) : [];
+}
+
+function readTodoFromLocalStorageTag() {
+  const tags = localStorage.getItem('tags');
+  return tags ? JSON.parse(tags) : [];
 }

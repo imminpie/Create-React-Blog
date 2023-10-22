@@ -6,6 +6,7 @@ import ModalBase from '../components/ModalBase';
 import { FaArrowLeft } from 'react-icons/fa';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import TagItem from '../components/TagItem';
 
 export default function PostNew() {
   const createDate = new Date().getTime();
@@ -17,10 +18,23 @@ export default function PostNew() {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [status, setStatus] = useState(false);
-  const [isModal, setIsModal] = useState({status: false, title: '', cancle: false,});
+  const [isModal, setIsModal] = useState({
+    status: false,
+    title: '',
+    cancle: false,
+  });
+
+  const [storeTag, setStoreTag] = useState(() => readTodoFromLocalStorageTag());
+  const [tagList, setTagList] = useState([]);
+
+  const [postId, setPostId] = useState(uuidv4());
 
   const handleChange = (e) => {
     setTitle(e.target.value);
+  };
+
+  const handleHashTag = (tagged) => {
+    setTagList(tagged);
   };
 
   const handleSubmit = (e) => {
@@ -38,12 +52,21 @@ export default function PostNew() {
     setStore((prev) => [
       ...prev,
       {
-        id: uuidv4(),
+        id: postId,
         title: title,
         content: content,
         date: new Date(createDate).toLocaleDateString(),
       },
     ]);
+
+    setStoreTag((prev) => [
+      ...prev,
+      {
+        id: postId,
+        tag: tagList,
+      },
+    ]);
+
     setStatus(!status);
   };
 
@@ -55,8 +78,13 @@ export default function PostNew() {
     setIsModal({ status: !isModal, title: '', cancle: false });
   };
 
+  const handleKeyDown = (e) => {
+    e.key === 'Enter' && e.preventDefault();
+  };
+
   useEffect(() => {
     localStorage.setItem('posts', JSON.stringify(store));
+    localStorage.setItem('tags', JSON.stringify(storeTag));
     status && navigate('/');
   }, [status]);
 
@@ -69,7 +97,10 @@ export default function PostNew() {
           ref={titleInput}
           onChange={handleChange}
           placeholder='제목을 입력하세요.'
+          onKeyDown={handleKeyDown}
+          className='input'
         />
+        <TagItem onTag={handleHashTag} store={tagList}/>
         <ReactQuill
           value={content}
           theme='snow'
@@ -97,4 +128,9 @@ export default function PostNew() {
 function readTodoFromLocalStorage() {
   const posts = localStorage.getItem('posts');
   return posts ? JSON.parse(posts) : [];
+}
+
+function readTodoFromLocalStorageTag() {
+  const tags = localStorage.getItem('tags');
+  return tags ? JSON.parse(tags) : [];
 }

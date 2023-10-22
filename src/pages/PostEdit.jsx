@@ -5,6 +5,7 @@ import ModalBase from '../components/ModalBase';
 import { FaArrowLeft } from 'react-icons/fa';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import TagItem from '../components/TagItem';
 
 export default function PostEdit() {
   const createDate = new Date().getTime();
@@ -19,11 +20,26 @@ export default function PostEdit() {
   const [content, setContent] = useState(post.content);
   const [isPost, setIsPost] = useState(false);
   const [status, setStatus] = useState(false);
-  const [isModal, setIsModal] = useState({status: false, title: '', cancle: false,});
+  const [isModal, setIsModal] = useState({
+    status: false,
+    title: '',
+    cancle: false,
+  });
 
+  const [storeTag, setStoreTag] = useState(() => readTodoFromLocalStorageTag());
+  const [tagList, setTagList] = useState(
+    storeTag.filter((item) => item.id === post.id && item)[0]
+  );
 
   const handleChange = (e) => {
     setTitle(e.target.value);
+  };
+
+  const handleHashTag = (updated) => {
+    setTagList((prev) => ({
+      ...prev,
+      tag: [...updated],
+    }));
   };
 
   const handleSubmit = (e) => {
@@ -45,6 +61,9 @@ export default function PostEdit() {
       content,
       date: new Date(createDate).toLocaleDateString(),
     }));
+
+    setStoreTag(storeTag.map((item) => (item.id === post.id ? tagList : item)));
+
     setIsPost(!isPost);
   };
 
@@ -65,7 +84,8 @@ export default function PostEdit() {
 
   useEffect(() => {
     if (status) {
-      status && localStorage.setItem('posts', JSON.stringify(store));
+      localStorage.setItem('posts', JSON.stringify(store));
+      localStorage.setItem('tags', JSON.stringify(storeTag));
       navigate(`/post/${post.id}`);
     }
   }, [status]);
@@ -80,7 +100,9 @@ export default function PostEdit() {
           ref={titleInput}
           onChange={handleChange}
           placeholder='제목을 입력하세요'
+          className='input'
         />
+        <TagItem onTag={handleHashTag} store={tagList.tag} />
         <ReactQuill
           value={content}
           theme='snow'
@@ -111,4 +133,9 @@ export default function PostEdit() {
 function readTodoFromLocalStorage() {
   const posts = localStorage.getItem('posts');
   return posts ? JSON.parse(posts) : [];
+}
+
+function readTodoFromLocalStorageTag() {
+  const tags = localStorage.getItem('tags');
+  return tags ? JSON.parse(tags) : [];
 }

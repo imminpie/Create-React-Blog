@@ -6,7 +6,7 @@
   position: fixed;
   width: 100%;
   bottom: 0;
-  background-color: var(--color-white);
+  background-color: var(--background-base);
   box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 8px;
 }
 

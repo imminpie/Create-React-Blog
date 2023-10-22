@@ -55,7 +55,7 @@
 }
 
 .button_danger {
-  background-color:var(--color-grey1);
+  background-color: var(--color-grey1);
 }
 
 .button_primary:hover {
@@ -63,10 +63,10 @@
 }
 
 .button_danger:hover {
-  background-color:var(--color-grey2);
+  background-color: var(--color-grey2);
 }
 
-input {
+.input {
   width: 100%;
   margin-bottom: 1.125rem;
   padding-bottom: 1.125rem;
@@ -78,6 +78,6 @@ input {
   background-color: var(--background-base);
 }
 
-input::placeholder {
+.input::placeholder {
   color: var(--color-text2);
 }
