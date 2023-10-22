@@ -3,13 +3,12 @@ import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
-import './Quill.css';
+import './css/Quill.css';
 import App from './App';
 import PostList from './pages/PostList';
 import PostNew from './pages/PostNew';
 import PostDetail from './pages/PostDetail';
 import PostEdit from './pages/PostEdit';
-
 
 const router = createBrowserRouter([
   {
