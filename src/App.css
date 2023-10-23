@@ -86,3 +86,14 @@ button.active {
   color: var(--color-white) !important;
   background-color: var(--color-accent) !important;
 }
+
+.no_posts {
+  width: 50%;
+  margin: 0 auto;
+  padding-top: 2rem;
+  text-align: center;
+}
+
+.no_posts > img {
+  width: 100%;
+}

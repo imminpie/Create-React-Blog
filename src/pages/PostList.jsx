@@ -2,20 +2,34 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from '../css/PostList.module.css';
 import Category from '../components/Category';
+import image from '../img/post.png';
 
 export default function PostList() {
-  const [storedPosts, setStoredPosts] = useState(() => getPostsFromLocalStorage());
+  const [storedPosts, setStoredPosts] = useState(() =>
+    getPostsFromLocalStorage()
+  );
   const [storedTags, setStoredTags] = useState(() => getTagsFromLocalStorage());
 
   const filters = [...new Set(storedTags.flatMap((item) => item.tag))];
-
   const [filter, setFilter] = useState('all');
   const filtered = getFilteredItems(storedPosts, storedTags, filter);
 
   return (
     <main className='wrap'>
       <div className={`${styles.list_area} inner`}>
-        <Category onFilterChange={setFilter} filters={filters} posts={storedPosts} />
+        <Category
+          onFilterChange={setFilter}
+          filters={filters}
+          posts={storedPosts}
+        />
+
+        {storedPosts.length === 0 && (
+          <div className='no_posts'>
+            <img src={image} alt='No_Posts' />
+            <p>현재 게시된 글이 없습니다. 새로운 글을 기대해주세요!</p>
+          </div>
+        )}
+
         <ul className={`${styles.list}`}>
           {filtered.map((post) => (
             <li className={styles.list_item} key={post.id}>
