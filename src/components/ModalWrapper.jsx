@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import styles from '../css/Modal.module.css';
 
-export default function ModalBase(props) {
+export default function ModalWrapper(props) {
   const { status, title, cancle } = props.show;
   const handleClick = () => {
     props.onConfirm();

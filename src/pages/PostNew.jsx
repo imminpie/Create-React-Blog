@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import styles from '../css/PostForm.module.css';
-import ModalBase from '../components/ModalBase';
+import ModalWrapper from '../components/ModalWrapper';
 import { FaArrowLeft } from 'react-icons/fa';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
@@ -14,19 +14,14 @@ export default function PostNew() {
   const titleInput = useRef();
   const contentInput = useRef();
 
-  const [store, setStore] = useState(() => getPostsFromLocalStorage());
+  const [storedPosts, setStoredPosts] = useState(() => getPostsFromLocalStorage() );
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [status, setStatus] = useState(false);
-  const [isModal, setIsModal] = useState({
-    status: false,
-    title: '',
-    cancle: false,
-  });
+  const [isModal, setIsModal] = useState({status: false, title: '', cancle: false,});
 
-  const [storeTag, setStoreTag] = useState(() => getTagsFromLocalStorage());
+  const [storedTags, setStoredTags] = useState(() => getTagsFromLocalStorage());
   const [tagList, setTagList] = useState([]);
-
   const [postId, setPostId] = useState(uuidv4());
 
   const handleChange = (e) => {
@@ -49,7 +44,7 @@ export default function PostNew() {
       contentInput.current.focus();
       return handleEmptyFields('내용을 입력하세요');
     }
-    setStore((prev) => [
+    setStoredPosts((prev) => [
       ...prev,
       {
         id: postId,
@@ -59,7 +54,7 @@ export default function PostNew() {
       },
     ]);
 
-    setStoreTag((prev) => [
+    setStoredTags((prev) => [
       ...prev,
       {
         id: postId,
@@ -74,7 +69,7 @@ export default function PostNew() {
     setIsModal({ status: true, title: title, cancle: false });
   };
 
-  const handleCandle = () => {
+  const handleCancle = () => {
     setIsModal({ status: !isModal, title: '', cancle: false });
   };
 
@@ -83,8 +78,8 @@ export default function PostNew() {
   };
 
   useEffect(() => {
-    localStorage.setItem('posts', JSON.stringify(store));
-    localStorage.setItem('tags', JSON.stringify(storeTag));
+    localStorage.setItem('posts', JSON.stringify(storedPosts));
+    localStorage.setItem('tags', JSON.stringify(storedTags));
     status && navigate('/');
   }, [status]);
 
@@ -120,7 +115,7 @@ export default function PostNew() {
           </button>
         </div>
       </div>
-      {isModal && <ModalBase show={isModal} onConfirm={handleCandle} />}
+      {isModal && <ModalWrapper show={isModal} onConfirm={handleCancle} />}
     </form>
   );
 }

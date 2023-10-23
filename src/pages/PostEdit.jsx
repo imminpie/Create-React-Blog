@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styles from '../css/PostForm.module.css';
-import ModalBase from '../components/ModalBase';
+import ModalWrapper from '../components/ModalWrapper';
 import { FaArrowLeft } from 'react-icons/fa';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
@@ -14,7 +14,7 @@ export default function PostEdit() {
   const titleInput = useRef();
   const contentInput = useRef();
 
-  const [store, setStore] = useState(() => getPostsFromLocalStorage());
+  const [storedPosts, setStoredPosts] = useState(() => getPostsFromLocalStorage());
   const [post, setPost] = useState(location.state.post[0]);
   const [title, setTitle] = useState(post.title);
   const [content, setContent] = useState(post.content);
@@ -26,9 +26,9 @@ export default function PostEdit() {
     cancle: false,
   });
 
-  const [storeTag, setStoreTag] = useState(() => getTagsFromLocalStorage());
+  const [storedTags, setStoredTags] = useState(() => getTagsFromLocalStorage());
   const [tagList, setTagList] = useState(
-    storeTag.filter((item) => item.id === post.id && item)[0]
+    storedTags.filter((item) => item.id === post.id && item)[0]
   );
 
   const handleChange = (e) => {
@@ -62,7 +62,7 @@ export default function PostEdit() {
       date: new Date(createDate).toLocaleDateString(),
     }));
 
-    setStoreTag(storeTag.map((item) => (item.id === post.id ? tagList : item)));
+    setStoredTags(storedTags.map((item) => (item.id === post.id ? tagList : item)));
 
     setIsPost(!isPost);
   };
@@ -77,15 +77,15 @@ export default function PostEdit() {
 
   useEffect(() => {
     if (isPost) {
-      setStore(store.map((prev) => (prev.id === post.id ? post : prev)));
+      setStoredPosts(storedPosts.map((prev) => (prev.id === post.id ? post : prev)));
       setStatus(!status);
     }
   }, [isPost]);
 
   useEffect(() => {
     if (status) {
-      localStorage.setItem('posts', JSON.stringify(store));
-      localStorage.setItem('tags', JSON.stringify(storeTag));
+      localStorage.setItem('posts', JSON.stringify(storedPosts));
+      localStorage.setItem('tags', JSON.stringify(storedTags));
       navigate(`/post/${post.id}`);
     }
   }, [status]);
@@ -125,7 +125,7 @@ export default function PostEdit() {
           </button>
         </div>
       </div>
-      {isModal && <ModalBase show={isModal} onConfirm={handleCandle} />}
+      {isModal && <ModalWrapper show={isModal} onConfirm={handleCandle} />}
     </form>
   );
 }

@@ -4,18 +4,18 @@ import styles from '../css/PostList.module.css';
 import Category from '../components/Category';
 
 export default function PostList() {
-  const [posts, setPosts] = useState(() => getPostsFromLocalStorage());
-  const [tags, setTages] = useState(() => getTagsFromLocalStorage());
+  const [storedPosts, setStoredPosts] = useState(() => getPostsFromLocalStorage());
+  const [storedTags, setStoredTags] = useState(() => getTagsFromLocalStorage());
 
-  const filters = [...new Set(tags.flatMap((item) => item.tag))];
+  const filters = [...new Set(storedTags.flatMap((item) => item.tag))];
 
   const [filter, setFilter] = useState('all');
-  const filtered = getFilteredItems(posts, tags, filter);
+  const filtered = getFilteredItems(storedPosts, storedTags, filter);
 
   return (
     <main className='wrap'>
       <div className={`${styles.list_area} inner`}>
-        <Category onFilterChange={setFilter} filters={filters} posts={posts} />
+        <Category onFilterChange={setFilter} filters={filters} posts={storedPosts} />
         <ul className={`${styles.list}`}>
           {filtered.map((post) => (
             <li className={styles.list_item} key={post.id}>
@@ -31,7 +31,7 @@ export default function PostList() {
                     }}
                   ></p>
                   <div className={styles.tag_area}>
-                    {tags.map(
+                    {storedTags.map(
                       (item) =>
                         item.id === post.id &&
                         item.tag.map((value) => (
