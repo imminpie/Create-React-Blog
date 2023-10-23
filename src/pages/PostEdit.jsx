@@ -14,7 +14,7 @@ export default function PostEdit() {
   const titleInput = useRef();
   const contentInput = useRef();
 
-  const [store, setStore] = useState(() => readTodoFromLocalStorage());
+  const [store, setStore] = useState(() => getPostsFromLocalStorage());
   const [post, setPost] = useState(location.state.post[0]);
   const [title, setTitle] = useState(post.title);
   const [content, setContent] = useState(post.content);
@@ -26,7 +26,7 @@ export default function PostEdit() {
     cancle: false,
   });
 
-  const [storeTag, setStoreTag] = useState(() => readTodoFromLocalStorageTag());
+  const [storeTag, setStoreTag] = useState(() => getTagsFromLocalStorage());
   const [tagList, setTagList] = useState(
     storeTag.filter((item) => item.id === post.id && item)[0]
   );
@@ -130,12 +130,12 @@ export default function PostEdit() {
   );
 }
 
-function readTodoFromLocalStorage() {
+function getPostsFromLocalStorage() {
   const posts = localStorage.getItem('posts');
   return posts ? JSON.parse(posts) : [];
 }
 
-function readTodoFromLocalStorageTag() {
+function getTagsFromLocalStorage() {
   const tags = localStorage.getItem('tags');
   return tags ? JSON.parse(tags) : [];
 }

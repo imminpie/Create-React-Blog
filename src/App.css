@@ -81,3 +81,8 @@
 .input::placeholder {
   color: var(--color-text2);
 }
+
+button.active {
+  color: var(--color-white) !important;
+  background-color: var(--color-accent) !important;
+}

@@ -6,8 +6,8 @@ import ModalBase from '../components/ModalBase';
 export default function PostDetail() {
   const params = useParams();
 
-  const [store, setStore] = useState(() => readTodoFromLocalStorage());
-  const [tags, setTages] = useState(() => readTodoFromLocalStorageTag());
+  const [store, setStore] = useState(() => getPostsFromLocalStorage());
+  const [tags, setTages] = useState(() => getTagsFromLocalStorage());
 
   const [status, setStatus] = useState(false);
   const [isModal, setIsModal] = useState({
@@ -87,12 +87,12 @@ export default function PostDetail() {
   );
 }
 
-function readTodoFromLocalStorage() {
+function getPostsFromLocalStorage() {
   const posts = localStorage.getItem('posts');
   return posts ? JSON.parse(posts) : [];
 }
 
-function readTodoFromLocalStorageTag() {
+function getTagsFromLocalStorage() {
   const tags = localStorage.getItem('tags');
   return tags ? JSON.parse(tags) : [];
 }

@@ -14,7 +14,7 @@ export default function PostNew() {
   const titleInput = useRef();
   const contentInput = useRef();
 
-  const [store, setStore] = useState(() => readTodoFromLocalStorage());
+  const [store, setStore] = useState(() => getPostsFromLocalStorage());
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [status, setStatus] = useState(false);
@@ -24,7 +24,7 @@ export default function PostNew() {
     cancle: false,
   });
 
-  const [storeTag, setStoreTag] = useState(() => readTodoFromLocalStorageTag());
+  const [storeTag, setStoreTag] = useState(() => getTagsFromLocalStorage());
   const [tagList, setTagList] = useState([]);
 
   const [postId, setPostId] = useState(uuidv4());
@@ -100,7 +100,7 @@ export default function PostNew() {
           onKeyDown={handleKeyDown}
           className='input'
         />
-        <TagItem onTag={handleHashTag} store={tagList}/>
+        <TagItem onTag={handleHashTag} store={tagList} />
         <ReactQuill
           value={content}
           theme='snow'
@@ -125,12 +125,12 @@ export default function PostNew() {
   );
 }
 
-function readTodoFromLocalStorage() {
+function getPostsFromLocalStorage() {
   const posts = localStorage.getItem('posts');
   return posts ? JSON.parse(posts) : [];
 }
 
-function readTodoFromLocalStorageTag() {
+function getTagsFromLocalStorage() {
   const tags = localStorage.getItem('tags');
   return tags ? JSON.parse(tags) : [];
 }
