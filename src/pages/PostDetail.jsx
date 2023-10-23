@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import styles from '../css/PostDetail.module.css';
-import ModalBase from '../components/ModalBase';
+import ModalWrapper from '../components/ModalWrapper';
 
 export default function PostDetail() {
   const params = useParams();
 
-  const [store, setStore] = useState(() => getPostsFromLocalStorage());
-  const [tags, setTages] = useState(() => getTagsFromLocalStorage());
+  const [storedPosts, setStoredPosts] = useState(() =>
+    getPostsFromLocalStorage()
+  );
+  const [storedTags, setStoredTags] = useState(() => getTagsFromLocalStorage());
 
   const [status, setStatus] = useState(false);
   const [isModal, setIsModal] = useState({
@@ -17,7 +19,7 @@ export default function PostDetail() {
   });
 
   const navigate = useNavigate();
-  const filtered = getFilteredItems(store, params);
+  const filtered = getFilteredItems(storedPosts, params);
 
   const handleModal = (e) => {
     e.preventDefault();
@@ -25,21 +27,23 @@ export default function PostDetail() {
   };
 
   const handleDelete = () => {
-    setStore(store.filter((post) => post.id !== params.id));
+    setStoredPosts(storedPosts.filter((post) => post.id !== params.id));
+    setStoredTags(storedTags.filter((post) => post.id !== params.id));
     setStatus(!status);
   };
 
-  const handleCandle = () => {
+  const handleCancle = () => {
     setIsModal({ status: !isModal, title: '', cancle: true });
   };
 
   useEffect(() => {
-    localStorage.setItem('posts', JSON.stringify(store));
+    localStorage.setItem('posts', JSON.stringify(storedPosts));
+    localStorage.setItem('tags', JSON.stringify(storedTags));
     if (status === true) {
       navigate('/');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [store, status]);
+  }, [storedPosts, status]);
 
   return (
     <section className='wrap'>
@@ -49,7 +53,7 @@ export default function PostDetail() {
             <p className={styles.title}>{post.title}</p>
             <p className={styles.date}>{post.date}</p>
             <div className={styles.tag_area}>
-              {tags.map(
+              {storedTags.map(
                 (item) =>
                   item.id === post.id &&
                   item.tag.map((value) => (
@@ -76,10 +80,10 @@ export default function PostDetail() {
           </div>
         </div>
         {isModal && (
-          <ModalBase
+          <ModalWrapper
             show={isModal}
             onConfirm={handleDelete}
-            onCancle={handleCandle}
+            onCancle={handleCancle}
           />
         )}
       </div>
