@@ -5,10 +5,8 @@ import Category from '../components/Category';
 import image from '../img/post.png';
 
 export default function PostList() {
-  const [storedPosts, setStoredPosts] = useState(() =>
-    getPostsFromLocalStorage()
-  );
-  const [storedTags, setStoredTags] = useState(() => getTagsFromLocalStorage());
+  const [storedPosts] = useState(() => getPostsFromLocalStorage());
+  const [storedTags] = useState(() => getTagsFromLocalStorage());
 
   const filters = [...new Set(storedTags.flatMap((item) => item.tag))];
   const [filter, setFilter] = useState('all');
@@ -17,11 +15,7 @@ export default function PostList() {
   return (
     <main className='wrap'>
       <div className={`${styles.list_area} inner`}>
-        <Category
-          onFilterChange={setFilter}
-          filters={filters}
-          posts={storedPosts}
-        />
+        <Category onFilterChange={setFilter} filters={filters} posts={storedPosts} />
 
         {storedPosts.length === 0 && (
           <div className='no_posts'>
@@ -35,9 +29,7 @@ export default function PostList() {
             <li className={styles.list_item} key={post.id}>
               <Link to={`/post/${post.id}`}>
                 <div className={styles.contents_area}>
-                  <p className={`${styles.title} text_overflow`}>
-                    {post.title}
-                  </p>
+                  <p className={`${styles.title} text_overflow`}>{post.title}</p>
                   <p
                     className={`${styles.content} text_overflow`}
                     dangerouslySetInnerHTML={{
@@ -49,10 +41,7 @@ export default function PostList() {
                       (item) =>
                         item.id === post.id &&
                         item.tag.map((value) => (
-                          <div
-                            className={styles.tag}
-                            key={value}
-                          >{`# ${value}`}</div>
+                          <div className={styles.tag} key={value}>{`# ${value}`}</div>
                         ))
                     )}
                   </div>

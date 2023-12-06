@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import styles from '../css/Navbar.module.css';
 
 export default function Navbar() {

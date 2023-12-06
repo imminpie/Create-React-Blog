@@ -80,7 +80,8 @@ export default function PostEdit() {
       setStoredPosts(storedPosts.map((prev) => (prev.id === post.id ? post : prev)));
       setStatus(!status);
     }
-  }, [isPost]);
+    // eslint-disable-next-line
+  }, [isPost, post]);
 
   useEffect(() => {
     if (status) {
@@ -88,6 +89,7 @@ export default function PostEdit() {
       localStorage.setItem('tags', JSON.stringify(storedTags));
       navigate(`/post/${post.id}`);
     }
+    // eslint-disable-next-line
   }, [status]);
 
   return (
@@ -113,10 +115,7 @@ export default function PostEdit() {
       </div>
       <div className={styles.button_area}>
         <div className={`${styles.buttons} inner`}>
-          <button
-            onClick={() => navigate(`/post/${post.id}`)}
-            className={styles.cancle}
-          >
+          <button onClick={() => navigate(`/post/${post.id}`)} className={styles.cancle}>
             <FaArrowLeft />
             <span>나가기</span>
           </button>

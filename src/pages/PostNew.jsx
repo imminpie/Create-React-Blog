@@ -14,15 +14,15 @@ export default function PostNew() {
   const titleInput = useRef();
   const contentInput = useRef();
 
-  const [storedPosts, setStoredPosts] = useState(() => getPostsFromLocalStorage() );
+  const [storedPosts, setStoredPosts] = useState(() => getPostsFromLocalStorage());
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [status, setStatus] = useState(false);
-  const [isModal, setIsModal] = useState({status: false, title: '', cancle: false,});
+  const [isModal, setIsModal] = useState({ status: false, title: '', cancle: false });
 
   const [storedTags, setStoredTags] = useState(() => getTagsFromLocalStorage());
   const [tagList, setTagList] = useState([]);
-  const [postId, setPostId] = useState(uuidv4());
+  const [postId] = useState(uuidv4());
 
   const handleChange = (e) => {
     setTitle(e.target.value);
@@ -81,6 +81,7 @@ export default function PostNew() {
     localStorage.setItem('posts', JSON.stringify(storedPosts));
     localStorage.setItem('tags', JSON.stringify(storedTags));
     status && navigate('/');
+    // eslint-disable-next-line
   }, [status]);
 
   return (

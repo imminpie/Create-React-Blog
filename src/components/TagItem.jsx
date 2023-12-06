@@ -51,7 +51,7 @@ export default function TagItem({ onTag, store }) {
 
   useEffect(() => {
     onTag(tagList);
-  }, [tagList]);
+  }, [tagList, onTag]);
 
   return (
     <div className={styles.tag_area}>
